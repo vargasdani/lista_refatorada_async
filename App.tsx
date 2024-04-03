@@ -1,25 +1,14 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+// 1. import `NativeBaseProvider` component
+import { NativeBaseProvider, Text, Box } from "native-base";
 
 export default function App() {
+  // 2. Use at the root of your app
   return (
-    <View style={styles.container}>
-      <Text style={styles.textTitulo}>Lista de Tarefas</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NativeBaseProvider>
+      <Box flex={1} bg="#402291" alignItems="center" justifyContent="center">
+      <Text color="#fff" fontSize={60} fontWeight="bold">Lista de Tarefas</Text>
+      </Box>
+    </NativeBaseProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#402291',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  textTitulo: {
-    color: '#fff',
-    fontSize: 60,
-    fontWeight: 'bold',
-  }
-});
