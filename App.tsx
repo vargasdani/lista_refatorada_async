@@ -1,14 +1,21 @@
-import React from "react";
-// 1. import `NativeBaseProvider` component
-import { NativeBaseProvider, Text, Box } from "native-base";
+import React, { useState } from "react";
+import { NativeBaseProvider, View } from 'native-base';
+import AdicionarTarefa from "./src/components/AdicionarTarefa";
+import ListaTarefas from "./src/components/ListaTarefas";
 
 export default function App() {
-  // 2. Use at the root of your app
+  const [tarefas, setTarefas] = useState<string[]>([]);
+
+  const adicionarTarefa = (novaTarefa: string) => {
+    setTarefas([...tarefas, novaTarefa]);
+  };
+
   return (
     <NativeBaseProvider>
-      <Box flex={1} bg="#402291" alignItems="center" justifyContent="center">
-      <Text color="#fff" fontSize={60} fontWeight="bold">Lista de Tarefas</Text>
-      </Box>
+      <View style={{ flex: 1 }}>
+        <AdicionarTarefa onAdicionarTarefa={adicionarTarefa} />
+        <ListaTarefas tarefas={tarefas} />
+      </View>
     </NativeBaseProvider>
   );
 }
