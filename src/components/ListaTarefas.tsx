@@ -1,27 +1,69 @@
 import React from "react";
-import { FlatList, Text, Box } from 'native-base'; // Importando Box para facilitar o estilo
+import { FlatList, Text, Box, IconButton, Input } from 'native-base';
+import { Ionicons } from '@expo/vector-icons';
+import { useEstadoGlobal } from "../hooks/EstadoGlobal";
 
-interface ListaTarefasProps {
-  tarefas: string[];
+interface TarefaItemProps {
+  id: number;
+  titulo: string;
 }
 
-const ListaTarefas: React.FC<ListaTarefasProps> = ({ tarefas }) => {
+const TarefaItem: React.FC<TarefaItemProps> = ({ id, titulo }) => {
+  const { editarTarefa, excluirTarefa } = useEstadoGlobal();
+  const [editando, setEditando] = React.useState(false);
+  const [novoTitulo, setNovoTitulo] = React.useState(titulo);
+
+  const handleEditar = () => {
+    if (editando) {
+      editarTarefa(id, novoTitulo);
+    }
+    setEditando(!editando);
+  };
+
+  return (
+    <Box
+      flexDirection="row" // Ajustando o layout para linha
+      justifyContent="space-between" // Alinhando os itens à direita
+      alignItems="center" // Alinhando os itens verticalmente
+      bg="gray.200"
+      p={4}
+      my={2}
+      mx={2}
+    >
+      {editando ? (
+        <Input
+          flex={3} // Ajustando o tamanho do input
+          value={novoTitulo}
+          onChangeText={setNovoTitulo}
+        />
+      ) : (
+        <Text flex={3}>{titulo}</Text> // Texto da tarefa à esquerda
+      )}
+      <IconButton
+        icon={<Ionicons name={editando ? "checkmark" : "pencil"} size={14} color="#402291" />}
+        colorScheme="light"
+        onPress={handleEditar}
+        style={{ borderRadius: 50, backgroundColor: 'gold', marginLeft: 4 }} // Adicionando margem ao botão editar
+      />
+      <IconButton
+        icon={<Ionicons name="trash" size={14} color="#402291" />}
+        colorScheme="light"
+        onPress={() => excluirTarefa(id)}
+        style={{ borderRadius: 50, backgroundColor: 'red', marginLeft: 4 }} // Adicionando margem ao botão excluir
+      />
+    </Box>
+  );
+};
+
+const ListaTarefas: React.FC = () => {
+  const { tarefas } = useEstadoGlobal();
+
   return (
     <FlatList
       data={tarefas}
-      renderItem={({ item }) => (
-        <Box
-          bg="gray.200" // Define a cor de fundo como cinza
-          p={4} // Adiciona um padding interno de 4
-          alignItems="flex-start" // Alinha o texto à esquerda
-          my={2} // Adiciona uma margem vertical de 2
-          mx={2} // Adiciona uma margem horizontal de 2
-        >
-          <Text>{item}</Text>
-        </Box>
-      )}
-      keyExtractor={(item, index) => index.toString()}
-      contentContainerStyle={{ flexGrow: 1 }} // Removido o estilo de alinhamento
+      renderItem={({ item }) => <TarefaItem id={item.id} titulo={item.titulo} />}
+      keyExtractor={(item) => item.id.toString()}
+      contentContainerStyle={{ flexGrow: 1 }}
     />
   );
 };
