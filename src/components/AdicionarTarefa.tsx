@@ -54,8 +54,8 @@ const AdicionarTarefa: React.FC = () => {
             placeholderTextColor="white"
             value={novaTarefa} // Valor do campo é a variável "novaTarefa"
             onChangeText={setNovaTarefa} // Função para atualizar o valor de "novaTarefa"
-            fontSize={14}
-            color="white"
+            fontSize={18} // Tamanho da fonte do adicionar tarefa
+            color="white" // Cor do texto do adicionar tarefa
           />
         </View>
         {/* Botão de adicionar tarefa */}

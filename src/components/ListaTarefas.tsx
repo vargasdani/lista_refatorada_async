@@ -55,6 +55,8 @@ const TarefaItem: React.FC<TarefaItemProps> = ({ id, titulo }) => {
       p={4} // Padding interno
       my={2} // Margem vertical
       mx={2} // Margem horizontal
+      borderRadius={8} // Borda arredondada
+      
     >
       {/* Modo de edição */}
       {editando ? (
@@ -62,10 +64,11 @@ const TarefaItem: React.FC<TarefaItemProps> = ({ id, titulo }) => {
           flex={3} // Tamanho do input
           value={novoTitulo} // Valor do input é "novoTitulo"
           onChangeText={setNovoTitulo} // Função para atualizar "novoTitulo"
+          fontSize={18}
         />
       ) : (
         // Modo de exibição
-        <Text flex={3}>{titulo}</Text> // Exibe o título da tarefa
+        <Text flex={3} fontSize={18}>{titulo}</Text> // Exibe o título da tarefa
       )}
 
       {/* Botão de editar/confirmar */}
@@ -97,9 +100,10 @@ const ListaTarefas: React.FC = () => {
   return (
     <FlatList
       data={tarefas} // Lista de tarefas a serem renderizadas
-      renderItem={({ item }) => <TarefaItem id={item.id} titulo={item.titulo} />} // Renderiza cada item da lista com TarefaItem
+      renderItem={({ item }) => <TarefaItem id={item.id} titulo={item.titulo}  />} // Renderiza cada item da lista com TarefaItem
       keyExtractor={(item) => item.id.toString()} // Chave única para cada item (ID da tarefa)
       contentContainerStyle={{ flexGrow: 1 }} // Permite que a lista cresça para preencher o espaço disponível
+      style={{ width: '100%', backgroundColor: '#402291' }} // Largura da lista
     />
   );
 };
