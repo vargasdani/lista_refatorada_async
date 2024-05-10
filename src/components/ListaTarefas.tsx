@@ -13,11 +13,11 @@ import { useEstadoGlobal } from "../hooks/EstadoGlobal";
 // Interface que define os props do componente TarefaItem
 interface TarefaItemProps {
   id: number; // Identificador único da tarefa
-  titulo: string; // Título da tarefa
+  tarefa: string; // Título da tarefa
 }
 
 // Componente "TarefaItem" - Representa um item individual na lista de tarefas
-const TarefaItem: React.FC<TarefaItemProps> = ({ id, titulo }) => {
+const TarefaItem: React.FC<TarefaItemProps> = ({ id, tarefa }) => {
 
   // **useEstadoGlobal** - Acessa o contexto global de estado e obtém as funções "editarTarefa" e "excluirTarefa"
   const { editarTarefa, excluirTarefa } = useEstadoGlobal();
@@ -28,7 +28,7 @@ const TarefaItem: React.FC<TarefaItemProps> = ({ id, titulo }) => {
 
   // **useState** - Define o estado local "novoTitulo" para armazenar o novo título durante a edição
   // O estado inicial é o título original da tarefa ("titulo")
-  const [novoTitulo, setNovoTitulo] = React.useState(titulo);
+  const [novoTitulo, setNovoTitulo] = React.useState(tarefa);
 
   // **Função handleEditar** - Chamada ao clicar no botão de editar ou confirmar a edição
   const handleEditar = () => {
@@ -68,7 +68,7 @@ const TarefaItem: React.FC<TarefaItemProps> = ({ id, titulo }) => {
         />
       ) : (
         // Modo de exibição
-        <Text flex={3} fontSize={18}>{titulo}</Text> // Exibe o título da tarefa
+        <Text flex={3} fontSize={18}>{tarefa}</Text> // Exibe o título da tarefa
       )}
 
       {/* Botão de editar/confirmar */}
@@ -100,7 +100,7 @@ const ListaTarefas: React.FC = () => {
   return (
     <FlatList
       data={tarefas} // Lista de tarefas a serem renderizadas
-      renderItem={({ item }) => <TarefaItem id={item.id} titulo={item.titulo}  />} // Renderiza cada item da lista com TarefaItem
+      renderItem={({ item }) => <TarefaItem id={item.id} tarefa={item.tarefa}  />} // Renderiza cada item da lista com TarefaItem
       keyExtractor={(item) => item.id.toString()} // Chave única para cada item (ID da tarefa)
       contentContainerStyle={{ flexGrow: 1 }} // Permite que a lista cresça para preencher o espaço disponível
       style={{ width: '100%', backgroundColor: '#402291' }} // Largura da lista

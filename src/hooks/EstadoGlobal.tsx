@@ -3,13 +3,13 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 // Interface que define a estrutura de uma tarefa
 interface Tarefa {
   id: number;
-  titulo: string;
+  tarefa: string;
 }
 
 // Interface que define o contexto global de estado
 interface ContextoEstadoGlobal {
   tarefas: Tarefa[];
-  adicionarTarefa: (titulo: string) => void;
+  adicionarTarefa: (tarefa: string) => void;
   editarTarefa: (id: number, novoTitulo: string) => void;
   excluirTarefa: (id: number) => void;
 }
@@ -46,14 +46,14 @@ export const ProvedorEstadoGlobal: React.FC<{ children: React.ReactNode }> = ({ 
   };
 
   // Função para adicionar uma nova tarefa
-  const adicionarTarefa = async (titulo: string) => {
+  const adicionarTarefa = async (tarefa: string) => {
     try {
       const response = await fetch('http://localhost:3000/tarefas', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ tarefa: titulo }),
+        body: JSON.stringify({ tarefa: tarefa }),
       });
 
       if (!response.ok) {
@@ -90,7 +90,7 @@ export const ProvedorEstadoGlobal: React.FC<{ children: React.ReactNode }> = ({ 
 
       // Atualiza o estado das tarefas após a edição
       const novasTarefas = tarefas.map(tarefa =>
-        tarefa.id === id ? { ...tarefa, titulo: novoTitulo } : tarefa
+        tarefa.id === id ? { ...tarefa, tarefa: novoTitulo } : tarefa
       );
       setTarefas(novasTarefas);
 
