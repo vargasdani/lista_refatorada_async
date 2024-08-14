@@ -1,23 +1,18 @@
-// Importa o provedor de estado global
-import { ProvedorEstadoGlobal } from "./src/hooks/EstadoGlobal";
-// Importa o componente ListaTarefas
-import ListaTarefas from "./src/components/ListaTarefas";
-import { NativeBaseProvider, View } from "native-base";
-import AdicionarTarefa from "./src/components/AdicionarTarefa";
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import LoginScreen from './src/screens/LoginScreen';
+import HomeScreen from './src/screens/HomeScreen';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
-  // Retorna a estrutura da tela principal
   return (
-    // Envolve a aplicação no provedor de estado global
-    <NativeBaseProvider>
-      <ProvedorEstadoGlobal>
-        <View style={{ flex: 1 }}>
-          {/* Componente para adicionar tarefas */}
-          <AdicionarTarefa />
-          {/* Componente que lista as tarefas */}
-          <ListaTarefas />
-        </View>
-      </ProvedorEstadoGlobal>
-    </NativeBaseProvider>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Home" component={HomeScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
