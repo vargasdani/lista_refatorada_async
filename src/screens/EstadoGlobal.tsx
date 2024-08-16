@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 // Interface que define a estrutura de uma tarefa
@@ -17,9 +18,9 @@ interface ContextoEstadoGlobal {
 // Cria o contexto global de estado
 const ContextoEstadoGlobal = createContext<ContextoEstadoGlobal>({
   tarefas: [],
-  adicionarTarefa: () => {},
-  editarTarefa: () => {},
-  excluirTarefa: () => {},
+  adicionarTarefa: () => { },
+  editarTarefa: () => { },
+  excluirTarefa: () => { },
 });
 
 // Hook para acessar o contexto global de estado
@@ -32,8 +33,15 @@ export const ProvedorEstadoGlobal: React.FC<{ children: React.ReactNode }> = ({ 
 
   // Função para carregar as tarefas do backend
   const carregarTarefas = async () => {
+    const token = await AsyncStorage.getItem('token');
     try {
-      const response = await fetch('http://localhost:3000/tarefas');
+      const response = await fetch('http://localhost:3000/tarefas', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+
+        },
+      });
+
       if (!response.ok) {
         throw new Error('Não foi possível carregar as tarefas');
       }
@@ -47,11 +55,13 @@ export const ProvedorEstadoGlobal: React.FC<{ children: React.ReactNode }> = ({ 
 
   // Função para adicionar uma nova tarefa
   const adicionarTarefa = async (tarefa: string) => {
+    const token = await AsyncStorage.getItem('token');
     try {
       const response = await fetch('http://localhost:3000/tarefas', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({ tarefa: tarefa }),
       });
@@ -73,11 +83,13 @@ export const ProvedorEstadoGlobal: React.FC<{ children: React.ReactNode }> = ({ 
 
   // Função para editar o título de uma tarefa
   const editarTarefa = async (id: number, novoTitulo: string) => {
+    const token = await AsyncStorage.getItem('token');
     try {
       const response = await fetch(`http://localhost:3000/tarefas/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({ tarefa: novoTitulo }),
       });
@@ -101,9 +113,14 @@ export const ProvedorEstadoGlobal: React.FC<{ children: React.ReactNode }> = ({ 
 
   // Função para excluir uma tarefa
   const excluirTarefa = async (id: number) => {
+    const token = await AsyncStorage.getItem('token');
     try {
       const response = await fetch(`http://localhost:3000/tarefas/${id}`, {
         method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
       });
 
       if (!response.ok) {
