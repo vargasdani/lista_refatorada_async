@@ -31,7 +31,6 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
  
      // Armazene o token JWT localmente
      await AsyncStorage.setItem('token', token);
-     console.log(token)
  
      // Navega para a tela Home após o login bem-sucedido
      navigation.navigate('Home');
