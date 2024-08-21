@@ -7,16 +7,10 @@ type Props = {
   navigation: NativeStackNavigationProp<any, any>;
 };
 
-const LoginScreen: React.FC<Props> = ({ navigation }) => {
+const Cadastro: React.FC<Props> = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
-  const handleLogin = async () => {
-    if (!username || !password) {
-      setErrorMessage('Por favor, preencha todos os campos.');
-      return;
-    }
 
     try {
       const response = await fetch('http://localhost:3000/login', {
@@ -118,4 +112,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default Cadastro;
