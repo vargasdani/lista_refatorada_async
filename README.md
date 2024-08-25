@@ -28,6 +28,7 @@ Digite esses comandos em ordem no Terminal-Git Bash(não se esqueça que é nece
 
 PARA RODAR O FRONT END:
 Digite esses comandos em ordem no Terminal-Git Bash
+
 - npm install –-force
   
 -npm start
