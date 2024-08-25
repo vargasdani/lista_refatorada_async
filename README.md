@@ -21,6 +21,7 @@
 
 PARA RODAR O BACKEND:
 Digite esses comandos em ordem no Terminal-Git Bash(não se esqueça que é necessário ter a extensão do sqlite instalada e abrir o database com a pasta do arquivo do banco de dados).
+
 -npm install 
 
 -node ./server.js
